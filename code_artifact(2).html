@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПЕЧЬ — Ресторан • Сыроварня • Кондитерская | Чебоксары</title>
+    <meta name="description" content="Ресторан, собственная сыроварня и авторская кондитерская «ПЕЧЬ» в Чебоксарах. Блюда из печи, ремесленные сыры, торты на заказ. Просп. Тракторостроителей, 78к2.">
+    
+    <!-- Google Fonts: Cormorant Garamond (для заголовков) и Manrope (для текста) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Настройка кастомной палитры и шрифтов в Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: '#1C1917',
+                        espresso: '#292524',
+                        cream: '#FAF7F2',
+                        creamDark: '#F0EAE1',
+                        terracotta: '#C26D3A',
+                        terracottaHover: '#A85828',
+                        gold: '#D4A373',
+                        mutedText: '#6B635B'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['"Manrope"', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Дополнительные стили для плавных анимаций и кастомного скроллбара -->
+    <style>
+        body {
+            background-color: #FAF7F2;
+            color: #1C1917;
+            overflow-x: hidden;
+        }
+        
+        /* Плавное появление элементов при скролле */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Стеклянный эффект для шапки */
+        .glass-header {
+            background: rgba(28, 25, 23, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Анимация переключения вкладок меню */
+        .tab-content {
+            animation: fadeInTab 0.4s ease-out forwards;
+        }
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-terracotta selection:text-white">
+
+    <!-- ==================== ШАПКА (HEADER) ==================== -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-header border-b border-white/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Логотип -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-terracotta/20 border border-terracotta/40 flex items-center justify-center text-gold group-hover:bg-terracotta group-hover:text-white transition-all duration-300">
+                        <!-- Иконка пламени / печи -->
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-serif text-2xl sm:text-3xl font-bold tracking-wider text-cream block leading-none">ПЕЧЬ</span>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-[0.18em] text-gold/90 block mt-1">Ресторан • Сыроварня • Кондитерская</span>
+                    </div>
+                </a>
+
+                <!-- Навигация для десктопа -->
+                <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-cream/85">
+                    <a href="#concept" class="hover:text-gold transition-colors">О концепции</a>
+                    <a href="#menu" class="hover:text-gold transition-colors">Меню и сыроварня</a>
+                    <a href="#cakes" class="hover:text-gold transition-colors">Торты на заказ</a>
+                    <a href="#reviews" class="hover:text-gold transition-colors">Отзывы</a>
+                    <a href="#contacts" class="hover:text-gold transition-colors">Контакты</a>
+                </nav>
+
+                <!-- Кнопка действия + бургер-меню -->
+                <div class="flex items-center gap-3">
+                    <button onclick="openModal('Бронь столика')" class="hidden sm:inline-flex items-center gap-2 bg-terracotta hover:bg-terracottaHover text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-lg shadow-terracotta/25 transition-all duration-300 active:scale-95">
+                        <span>Забронировать стол</span>
+                    </button>
+                    
+                    <!-- Кнопка мобильного меню -->
+                    <button id="mobile-menu-btn" aria-label="Открыть меню" class="lg:hidden p-2.5 rounded-xl text-cream hover:bg-white/10 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Выпадающее мобильное меню -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-charcoal border-t border-white/10 px-4 pt-4 pb-6 space-y-3">
+            <a href="#concept" class="mobile-link block py-2.5 px-3 rounded-lg text-cream/90 hover:bg-white/5 hover:text-gold font-medium">О концепции</a>
+            <a href="#menu" class="mobile-link block py-2.5 px-3 rounded-lg text-cream/90 hover:bg-white/5 hover:text-gold font-medium">Меню и сыроварня</a>
+            <a href="#cakes" class="mobile-link block py-2.5 px-3 rounded-lg text-cream/90 hover:bg-white/5 hover:text-gold font-medium">Торты на заказ</a>
+            <a href="#reviews" class="mobile-link block py-2.5 px-3 rounded-lg text-cream/90 hover:bg-white/5 hover:text-gold font-medium">Отзывы гостей</a>
+            <a href="#contacts" class="mobile-link block py-2.5 px-3 rounded-lg text-cream/90 hover:bg-white/5 hover:text-gold font-medium">Контакты</a>
+            <div class="pt-2">
+                <button onclick="openModal('Бронь столика')" class="w-full bg-terracotta hover:bg-terracottaHover text-white font-semibold py-3.5 rounded-xl shadow-md transition-all">
+                    Забронировать столик
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== ГЛАВНЫЙ ЭКРАН (HERO) ==================== -->
+    <section class="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-charcoal">
+        <!-- Фоновое изображение с fallback -->
+        <div class="absolute inset-0 z-0">
+            <img 
+                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1920&q=80" 
+                onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/1C1917/D4A373?text=Ресторан+и+сыроварня+ПЕЧЬ';" 
+                alt="Уютный интерьер ресторана Печь" 
+                class="w-full h-full object-cover object-center opacity-45 scale-105"
+            >
+            <!-- Многослойный градиент для идеальной читаемости текста -->
+            <div class="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/85 to-charcoal/50"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/60"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="max-w-3xl">
+                <!-- Бейдж локации и рейтинга -->
+                <div class="inline-flex flex-wrap items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-md border border-white/15 rounded-full px-4 py-1.5 mb-6 text-xs sm:text-sm text-cream/95">
+                    <span class="flex items-center gap-1.5 text-gold font-semibold">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        4.8 на Яндекс Картах
+                    </span>
+                    <span class="text-white/30">•</span>
+                    <span>Чебоксары, просп. Тракторостроителей, 78к2</span>
+                </div>
+
+                <!-- Главный заголовок -->
+                <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-cream leading-[1.08] tracking-tight mb-6">
+                    Вкус живого огня, <span class="text-gold italic font-normal">ремесленных сыров</span> и авторских десертов
+                </h1>
+
+                <!-- Подзаголовок -->
+                <p class="text-base sm:text-lg md:text-xl text-cream/80 leading-relaxed mb-9 max-w-2xl font-light">
+                    Семейный ресторан с душой в Чебоксарах: готовим томлёные блюда в настоящей печи, варим нежнейшие молодые сыры в собственной сыроварне и создаём десерты, за которыми возвращаются снова и снова.
+                </p>
+
+                <!-- Кнопки CTA -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                    <button onclick="openModal('Бронь столика')" class="inline-flex items-center justify-center gap-2.5 bg-terracotta hover:bg-terracottaHover text-white font-semibold px-8 py-4 rounded-2xl shadow-xl shadow-terracotta/30 transition-all duration-300 text-base active:scale-95">
+                        <span>Забронировать столик</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </button>
+                    
+                    <a href="#menu" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 text-cream font-medium px-8 py-4 rounded-2xl transition-all duration-300 text-base text-center">
+                        <span>Смотреть меню и цены</span>
+                    </a>
+                </div>
+
+                <!-- Мини-факты внизу Hero -->
+                <div class="grid grid-cols-3 gap-4 sm:gap-8 mt-12 pt-8 border-t border-white/15 max-w-xl">
+                    <div>
+                        <p class="font-serif text-2xl sm:text-3xl font-bold text-gold">11:00–23:00</p>
+                        <p class="text-xs sm:text-sm text-cream/65 mt-1">Ежедневно без выходных</p>
+                    </div>
+                    <div>
+                        <p class="font-serif text-2xl sm:text-3xl font-bold text-gold">Свой цех</p>
+                        <p class="text-xs sm:text-sm text-cream/65 mt-1">Свежий сыр каждое утро</p>
+                    </div>
+                    <div>
+                        <p class="font-serif text-2xl sm:text-3xl font-bold text-gold">~2 000</p>
+                        <p class="text-xs sm:text-sm text-cream/65 mt-1">Довольных отзывов</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== БЛОК: ТРИ НАПРАВЛЕНИЯ ПОД ОДНОЙ КРЫШЕЙ ==================== -->
+    <section id="concept" class="py-20 sm:py-28 bg-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Заголовок секции -->
+            <div class="text-center max-w-2xl mx-auto mb-14 sm:mb-16 reveal">
+                <span class="text-xs uppercase tracking-[0.22em] text-terracotta font-bold">Концепция заведения</span>
+                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal mt-3">
+                    Три гастрономических ремесла под одной крышей
+                </h2>
+                <p class="text-mutedText mt-4 text-base sm:text-lg">
+                    Мы объединили традиции дровяной печи, искусство домашнего сыроварения и тонкую кондитерскую эстетику.
+                </p>
+            </div>
+
+            <!-- Сетка карточек -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Карточка 1: Ресторан -->
+                <div class="reveal group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-200/70 flex flex-col">
+                    <div class="relative h-64 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/800x600/292524/D4A373?text=Ресторан+ПЕЧЬ';" 
+                            alt="Блюда из печи в ресторане Печь" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        >
+                        <div class="absolute top-4 left-4 bg-charcoal/85 backdrop-blur-md text-gold text-xs font-semibold px-3.5 py-1.5 rounded-full">
+                            01 • Живой огонь
+                        </div>
+                    </div>
+                    <div class="p-7 sm:p-8 flex-1 flex flex-col">
+                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal mb-3">Ресторан авторской и домашней кухни</h3>
+                        <p class="text-mutedText text-sm sm:text-base leading-relaxed flex-1">
+                            Томлёное мясо, румяные хачапури прямо из печи, наваристые супы и горячие сковородки. Уютная атмосфера для семейного ужина, делового обеда или тёплой встречи с друзьями.
+                        </p>
+                        <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-sm font-semibold text-terracotta">
+                            <a href="#menu" class="inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">
+                                <span>Перейти к горячему</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 2: Сыроварня -->
+                <div class="reveal group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-200/70 flex flex-col">
+                    <div class="relative h-64 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=800&q=80" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/800x600/292524/D4A373?text=Собственная+Сыроварня';" 
+                            alt="Ремесленные сыры собственной сыроварни" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        >
+                        <div class="absolute top-4 left-4 bg-charcoal/85 backdrop-blur-md text-gold text-xs font-semibold px-3.5 py-1.5 rounded-full">
+                            02 • Фермерское молоко
+                        </div>
+                    </div>
+                    <div class="p-7 sm:p-8 flex-1 flex flex-col">
+                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal mb-3">Собственная ремесленная сыроварня</h3>
+                        <p class="text-mutedText text-sm sm:text-base leading-relaxed flex-1">
+                            Каждое утро варим нежную буррату, сливочную страчателлу, халуми для жарки и выдержанную качотту из отборного фермерского молока. Подаём к столу и упаковываем с собой.
+                        </p>
+                        <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-sm font-semibold text-terracotta">
+                            <a href="#menu" onclick="switchTab('cheese')" class="inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">
+                                <span>Ассортимент сыров</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка 3: Кондитерская -->
+                <div class="reveal group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-200/70 flex flex-col">
+                    <div class="relative h-64 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/800x600/292524/D4A373?text=Кондитерская+ПЕЧЬ';" 
+                            alt="Авторские торты и десерты" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        >
+                        <div class="absolute top-4 left-4 bg-charcoal/85 backdrop-blur-md text-gold text-xs font-semibold px-3.5 py-1.5 rounded-full">
+                            03 • Ручная работа
+                        </div>
+                    </div>
+                    <div class="p-7 sm:p-8 flex-1 flex flex-col">
+                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal mb-3">Кондитерская и торты на заказ</h3>
+                        <p class="text-mutedText text-sm sm:text-base leading-relaxed flex-1">
+                            Свежие авторские пирожные и чизкейки на витрине каждый день, а также индивидуальные торты ручной работы на свадьбы, дни рождения, юбилеи и корпоративы в Чебоксарах.
+                        </p>
+                        <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-sm font-semibold text-terracotta">
+                            <a href="#cakes" class="inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">
+                                <span>Заказать праздничный торт</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ИНТЕРАКТИВНОЕ МЕНЮ ==================== -->
+    <section id="menu" class="py-20 sm:py-28 bg-creamDark/60 border-y border-stone-200/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Заголовок -->
+            <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12 reveal">
+                <span class="text-xs uppercase tracking-[0.22em] text-terracotta font-bold">Гастрономическая карта</span>
+                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal mt-3">
+                    Избранные позиции меню
+                </h2>
+                <p class="text-mutedText mt-3 text-base">
+                    Выберите раздел, чтобы познакомиться с хитами кухни, сыроварни и кондитерской витрины
+                </p>
+            </div>
+
+            <!-- Вкладки (Tabs) -->
+            <div class="flex flex-wrap justify-center gap-2.5 sm:gap-4 mb-10 sm:mb-12 reveal" role="tablist">
+                <button 
+                    id="tab-btn-hot" 
+                    onclick="switchTab('hot')" 
+                    class="menu-tab-btn px-5 sm:px-7 py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base font-semibold transition-all duration-300 bg-charcoal text-cream shadow-lg"
+                >
+                    🔥 Из печи и горячее
+                </button>
+                <button 
+                    id="tab-btn-cheese" 
+                    onclick="switchTab('cheese')" 
+                    class="menu-tab-btn px-5 sm:px-7 py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base font-semibold transition-all duration-300 bg-white text-charcoal hover:bg-stone-100 border border-stone-200"
+                >
+                    🧀 Сыроварня
+                </button>
+                <button 
+                    id="tab-btn-dessert" 
+                    onclick="switchTab('dessert')" 
+                    class="menu-tab-btn px-5 sm:px-7 py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base font-semibold transition-all duration-300 bg-white text-charcoal hover:bg-stone-100 border border-stone-200"
+                >
+                    🍰 Кондитерская
+                </button>
+            </div>
+
+            <!-- Контейнер позиций меню -->
+            <div id="menu-items-container" class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+                <!-- Контент динамически подставляется через JS для мгновенного отклика -->
+            </div>
+
+            <!-- Сноска внизу меню -->
+            <div class="mt-10 text-center bg-white/80 border border-stone-200/80 rounded-2xl p-5 sm:p-6 max-w-3xl mx-auto">
+                <p class="text-sm sm:text-base text-mutedText">
+                    Показаны популярные позиции. <strong class="text-charcoal font-semibold">Полное сезонное меню, детское меню и винная карта</strong> доступны в ресторане.
+                </p>
+                <div class="mt-4">
+                    <button onclick="openModal('Бронь столика')" class="inline-flex items-center gap-2 text-sm font-bold text-terracotta hover:text-terracottaHover transition-colors">
+                        <span>Забронировать столик на вечер →</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== БАННЕР: ТОРТЫ И СЫРЫ К ПРАЗДНИКУ ==================== -->
+    <section id="cakes" class="py-16 sm:py-24 bg-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative rounded-3xl overflow-hidden bg-charcoal text-cream shadow-2xl reveal">
+                <!-- Фоновый декор -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 items-center">
+                    <div class="lg:col-span-7 p-8 sm:p-12 lg:p-16 z-10">
+                        <span class="inline-block bg-terracotta/25 border border-terracotta/50 text-gold text-xs uppercase tracking-[0.2em] font-semibold px-4 py-1.5 rounded-full mb-5">
+                            К вашему торжеству
+                        </span>
+                        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-5">
+                            Торты на заказ и подарочные сырные сеты от «ПЕЧЬ»
+                        </h2>
+                        <p class="text-cream/80 text-base sm:text-lg leading-relaxed mb-8 max-w-xl font-light">
+                            Создадим центральный десерт для вашей свадьбы, дня рождения или корпоратива с индивидуальным дизайном и натуральной начинкой. А для ценителей гастрономии соберём крафтовую сырную корзину с мёдом и орехами.
+                        </p>
+                        
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                            <button onclick="openModal('Заказ торта')" class="bg-terracotta hover:bg-terracottaHover text-white font-semibold px-7 py-4 rounded-2xl shadow-lg shadow-terracotta/30 transition-all text-center active:scale-95">
+                                Рассчитать заказ торта
+                            </button>
+                            <button onclick="openModal('Сырный сет')" class="bg-white/10 hover:bg-white/15 border border-white/20 text-cream font-medium px-7 py-4 rounded-2xl transition-all text-center">
+                                Заказать сырный сет
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 h-72 sm:h-96 lg:h-full relative">
+                        <img 
+                            src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=80" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/900x800/292524/D4A373?text=Авторские+торты+на+заказ';" 
+                            alt="Авторский праздничный торт от кондитерской Печь" 
+                            class="w-full h-full object-cover"
+                        >
+                        <div class="hidden lg:block absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-charcoal to-transparent"></div>
+                        <div class="lg:hidden absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-charcoal to-transparent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ОТЗЫВЫ И АТМОСФЕРА ==================== -->
+    <section id="reviews" class="py-20 sm:py-28 bg-espresso text-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Шапка секции с рейтингом -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 reveal">
+                <div>
+                    <span class="text-xs uppercase tracking-[0.22em] text-gold font-bold">Репутация в Чебоксарах</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mt-3">
+                        Гости возвращаются за вкусом и уютом
+                    </h2>
+                </div>
+
+                <!-- Плашка рейтинга Яндекс.Карт -->
+                <div class="inline-flex items-center gap-4 bg-white/5 border border-white/15 rounded-2xl px-6 py-4 self-start md:self-auto">
+                    <div class="text-4xl sm:text-5xl font-serif font-bold text-gold">4.8</div>
+                    <div>
+                        <div class="flex text-gold text-sm gap-0.5">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-cream/80 mt-0.5">На основе ~2 000 оценок</p>
+                        <p class="text-[11px] text-cream/50">Яндекс Карты • Чебоксары</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточки отзывов -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Отзыв 1 -->
+                <div class="reveal bg-charcoal/80 border border-white/10 rounded-3xl p-7 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex text-gold text-sm">★★★★★</div>
+                            <span class="text-xs text-cream/40">Яндекс Карты</span>
+                        </div>
+                        <p class="text-cream/90 text-sm sm:text-base leading-relaxed italic">
+                            «Одно из самых душевных мест в Новоюжном районе! Брали хачапури прямо из печи и буррату с томатами — сыр просто тает во рту. На выходе ещё прихватили домой качотту и медовик. Обязательно вернёмся!»
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-5 border-t border-white/10 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-terracotta/30 text-gold flex items-center justify-center font-bold text-sm">ЕК</div>
+                        <div>
+                            <p class="font-semibold text-sm text-cream">Елена К.</p>
+                            <p class="text-xs text-cream/50">Постоянный гость</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Отзыв 2 -->
+                <div class="reveal bg-charcoal/80 border border-white/10 rounded-3xl p-7 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex text-gold text-sm">★★★★★</div>
+                            <span class="text-xs text-cream/40">Яндекс Карты</span>
+                        </div>
+                        <p class="text-cream/90 text-sm sm:text-base leading-relaxed italic">
+                            «Заказывали здесь торт на юбилей мамы и отмечали сам праздник в ресторане. Говяжьи щёчки нежнейшие, обслуживание быстрое и ненавязчивое, а торт сделали точь-в-точь по нашему референсу. Спасибо команде!»
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-5 border-t border-white/10 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-terracotta/30 text-gold flex items-center justify-center font-bold text-sm">АМ</div>
+                        <div>
+                            <p class="font-semibold text-sm text-cream">Алексей Михайлов</p>
+                            <p class="text-xs text-cream/50">Банкет и торт на заказ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Отзыв 3 -->
+                <div class="reveal bg-charcoal/80 border border-white/10 rounded-3xl p-7 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex text-gold text-sm">★★★★★</div>
+                            <span class="text-xs text-cream/40">Яндекс Карты</span>
+                        </div>
+                        <p class="text-cream/90 text-sm sm:text-base leading-relaxed italic">
+                            «Очень уютный интерьер, тёплый свет, приятная музыка. Обожаю их баскский чизкейк и жареный халуми с ягодным соусом. Отличное место, чтобы спокойно посидеть вечером с семьёй.»
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-5 border-t border-white/10 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-terracotta/30 text-gold flex items-center justify-center font-bold text-sm">МС</div>
+                        <div>
+                            <p class="font-semibold text-sm text-cream">Марина Смирнова</p>
+                            <p class="text-xs text-cream/50">Гость ресторана</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== КОНТАКТЫ И КАРТА ==================== -->
+    <section id="contacts" class="py-20 sm:py-28 bg-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
+                
+                <!-- Левая колонка: Контактная информация -->
+                <div class="lg:col-span-5 flex flex-col justify-between reveal">
+                    <div>
+                        <span class="text-xs uppercase tracking-[0.22em] text-terracotta font-bold">Ждём вас в гости</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal mt-3 mb-6">
+                            Контакты и бронирование
+                        </h2>
+                        <p class="text-mutedText text-base mb-8">
+                            Забронируйте любимый столик заранее или оставьте заявку на расчёт праздничного торта и сырного набора.
+                        </p>
+
+                        <div class="space-y-6">
+                            <!-- Адрес -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-11 h-11 rounded-2xl bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0 mt-0.5">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-wider text-mutedText font-semibold">Адрес ресторана</p>
+                                    <p class="text-charcoal font-bold text-base sm:text-lg mt-0.5">г. Чебоксары, просп. Тракторостроителей, 78к2</p>
+                                    <a href="https://yandex.ru/maps/org/pech/60171653490/" target="_blank" rel="noopener noreferrer" class="inline-block text-sm text-terracotta hover:underline mt-1 font-medium">
+                                        Построить маршрут в Яндекс.Картах ↗
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- График работы -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-11 h-11 rounded-2xl bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0 mt-0.5">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-wider text-mutedText font-semibold">Режим работы</p>
+                                    <p class="text-charcoal font-bold text-base sm:text-lg mt-0.5">Ежедневно с 11:00 до 23:00</p>
+                                    <p class="text-sm text-mutedText mt-0.5">Витрина сыроварни и кондитерской работает весь день</p>
+                                </div>
+                            </div>
+
+                            <!-- Быстрая связь -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-11 h-11 rounded-2xl bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0 mt-0.5">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-wider text-mutedText font-semibold">Бронь и предзаказы</p>
+                                    <p class="text-charcoal font-bold text-base sm:text-lg mt-0.5">+7 (8352) 00-00-00</p>
+                                    <div class="flex flex-wrap gap-2.5 mt-3">
+                                        <button onclick="openModal('Бронь столика')" class="inline-flex items-center gap-2 bg-[#2AABEE]/15 hover:bg-[#2AABEE]/25 text-[#1b86bf] font-semibold text-xs sm:text-sm px-4 py-2 rounded-xl transition-colors">
+                                            <span>Telegram</span>
+                                        </button>
+                                        <button onclick="openModal('Бронь столика')" class="inline-flex items-center gap-2 bg-[#25D366]/15 hover:bg-[#25D366]/25 text-[#179947] font-semibold text-xs sm:text-sm px-4 py-2 rounded-xl transition-colors">
+                                            <span>WhatsApp</span>
+                                        </button>
+                                        <button onclick="openModal('Бронь столика')" class="inline-flex items-center gap-2 bg-terracotta text-white hover:bg-terracottaHover font-semibold text-xs sm:text-sm px-4 py-2 rounded-xl transition-colors">
+                                            <span>Онлайн-бронь</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правая колонка: Визуальная карта + форма быстрой заявки -->
+                <div class="lg:col-span-7 reveal flex flex-col gap-6">
+                    <!-- Стилизованная интерактивная карточка локации (работает мгновенно без блокировок iframe) -->
+                    <div class="relative rounded-3xl overflow-hidden border border-stone-200 shadow-md bg-espresso min-h-[280px] sm:min-h-[320px] flex flex-col justify-between p-6 sm:p-8 text-cream">
+                        <img 
+                            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/1200x600/292524/D4A373?text=Чебоксары,+просп.+Тракторостроителей,+78к2';" 
+                            alt="Локация ресторана Печь в Чебоксарах" 
+                            class="absolute inset-0 w-full h-full object-cover opacity-30"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-transparent"></div>
+
+                        <div class="relative z-10 flex items-center justify-between">
+                            <span class="bg-charcoal/90 border border-white/15 px-3.5 py-1.5 rounded-full text-xs font-medium text-gold">
+                                Новоюжный район • Чебоксары
+                            </span>
+                            <span class="bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 px-3 py-1 rounded-full text-xs font-semibold">
+                                ● Открыто до 23:00
+                            </span>
+                        </div>
+
+                        <div class="relative z-10 mt-auto pt-12">
+                            <div class="bg-charcoal/90 backdrop-blur-md border border-white/15 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div>
+                                    <p class="font-serif text-2xl font-bold text-cream">Ресторан «ПЕЧЬ»</p>
+                                    <p class="text-sm text-cream/75 mt-0.5">просп. Тракторостроителей, 78к2 • Удобная парковка у входа</p>
+                                </div>
+                                <a href="https://yandex.ru/maps/org/pech/60171653490/" target="_blank" rel="noopener noreferrer" class="shrink-0 inline-flex items-center justify-center gap-2 bg-gold hover:bg-amber-400 text-charcoal font-bold text-sm px-5 py-3 rounded-xl transition-colors">
+                                    <span>Открыть в Яндекс.Картах</span>
+                                    <span>↗</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Компактная форма быстрой заявки прямо на странице -->
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200/80 shadow-sm">
+                        <h3 class="font-serif text-2xl font-bold text-charcoal mb-2">Быстрая заявка на бронь или торт</h3>
+                        <p class="text-sm text-mutedText mb-5">Оставьте телефон — администратор перезвонит в течение 5 минут и подтвердит бронь.</p>
+                        
+                        <form onsubmit="handleInlineForm(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <input type="text" required placeholder="Ваше имя" class="w-full px-4 py-3.5 rounded-xl bg-cream border border-stone-200 text-charcoal placeholder:text-mutedText/70 text-sm focus:outline-none focus:border-terracotta">
+                            <input type="tel" required placeholder="+7 (___) ___-__-__" class="w-full px-4 py-3.5 rounded-xl bg-cream border border-stone-200 text-charcoal placeholder:text-mutedText/70 text-sm focus:outline-none focus:border-terracotta">
+                            <button type="submit" class="w-full bg-terracotta hover:bg-terracottaHover text-white font-semibold py-3.5 px-6 rounded-xl text-sm transition-all shadow-md active:scale-95">
+                                Жду звонка
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ФУТЕР (FOOTER) ==================== -->
+    <footer class="bg-charcoal text-cream/75 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-white/10">
+                <div>
+                    <span class="font-serif text-3xl font-bold text-cream tracking-wider">ПЕЧЬ</span>
+                    <p class="text-xs uppercase tracking-[0.2em] text-gold mt-1">Ресторан • Сыроварня • Кондитерская</p>
+                </div>
+                <div class="flex flex-wrap gap-6 text-sm">
+                    <a href="#concept" class="hover:text-gold transition-colors">О концепции</a>
+                    <a href="#menu" class="hover:text-gold transition-colors">Меню</a>
+                    <a href="#cakes" class="hover:text-gold transition-colors">Торты на заказ</a>
+                    <a href="#reviews" class="hover:text-gold transition-colors">Отзывы</a>
+                    <a href="#contacts" class="hover:text-gold transition-colors">Контакты</a>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream/50">
+                <p>г. Чебоксары, просп. Тракторостроителей, 78к2 • Ежедневно 11:00 – 23:00</p>
+                <!-- Ненавязчивая плашка демо-концепта -->
+                <p class="bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full text-cream/70">
+                    Демо-концепт сайта для ресторана «ПЕЧЬ» (Чебоксары)
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== МОДАЛЬНОЕ ОКНО БРОНИРОВАНИЯ / ЗАКАЗА ==================== -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-charcoal/80 backdrop-blur-sm">
+        <div class="bg-cream border border-stone-200 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative transform transition-all">
+            <!-- Кнопка закрытия -->
+            <button onclick="closeModal()" aria-label="Закрыть окно" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-stone-200/70 hover:bg-stone-300 text-charcoal flex items-center justify-center transition-colors">
+                ✕
+            </button>
+
+            <!-- Форма внутри модалки -->
+            <div id="modal-form-view">
+                <span class="text-xs uppercase tracking-[0.2em] text-terracotta font-bold">Ресторан «ПЕЧЬ»</span>
+                <h3 id="modal-title" class="font-serif text-3xl font-bold text-charcoal mt-1 mb-2">Забронировать столик</h3>
+                <p class="text-sm text-mutedText mb-6">Заполните данные, и администратор свяжется с вами для подтверждения.</p>
+
+                <form onsubmit="submitModalForm(event)" class="space-y-4">
+                    <!-- Выбор формата заявки -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-mutedText mb-1.5">Формат обращения</label>
+                        <select id="modal-type" class="w-full px-4 py-3 rounded-xl bg-white border border-stone-200 text-charcoal text-sm font-medium focus:outline-none focus:border-terracotta">
+                            <option value="Бронь столика">🍽 Бронь столика в ресторане</option>
+                            <option value="Заказ торта">🎂 Индивидуальный торт на заказ</option>
+                            <option value="Сырный сет">🧀 Подарочный сырный сет</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-mutedText mb-1.5">Ваше имя</label>
+                        <input type="text" id="modal-name" required placeholder="Например, Анна" class="w-full px-4 py-3 rounded-xl bg-white border border-stone-200 text-charcoal text-sm focus:outline-none focus:border-terracotta">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-mutedText mb-1.5">Телефон</label>
+                        <input type="tel" id="modal-phone" required placeholder="+7 (900) 000-00-00" class="w-full px-4 py-3 rounded-xl bg-white border border-stone-200 text-charcoal text-sm focus:outline-none focus:border-terracotta">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-mutedText mb-1.5">Дата / Время</label>
+                            <input type="text" placeholder="Сегодня, 19:00" class="w-full px-4 py-3 rounded-xl bg-white border border-stone-200 text-charcoal text-sm focus:outline-none focus:border-terracotta">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-mutedText mb-1.5">Гостей / Вес торта</label>
+                            <input type="text" placeholder="2 гостя / 2 кг" class="w-full px-4 py-3 rounded-xl bg-white border border-stone-200 text-charcoal text-sm focus:outline-none focus:border-terracotta">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-terracotta hover:bg-terracottaHover text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-terracotta/25 transition-all mt-2 active:scale-95">
+                        Отправить заявку
+                    </button>
+                </form>
+            </div>
+
+            <!-- Экран успешной отправки (демонстрация конверсии) -->
+            <div id="modal-success-view" class="hidden text-center py-6">
+                <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4 text-3xl">
+                    ✓
+                </div>
+                <h3 class="font-serif text-3xl font-bold text-charcoal mb-2">Заявка принята!</h3>
+                <p id="success-message-text" class="text-sm text-mutedText leading-relaxed mb-6">
+                    Спасибо! Администратор ресторана «ПЕЧЬ» свяжется с вами в ближайшие минуты.
+                </p>
+                <button onclick="closeModal()" class="bg-charcoal text-cream font-semibold px-8 py-3 rounded-xl text-sm hover:bg-espresso transition-colors">
+                    Вернуться на сайт
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Всплывающее уведомление для встроенной формы -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 hidden bg-charcoal text-cream border border-gold/40 px-5 py-4 rounded-2xl shadow-2xl max-w-sm items-center gap-3">
+        <span class="text-gold text-xl">✓</span>
+        <p class="text-sm font-medium">Заявка отправлена! Администратор скоро свяжется с вами.</p>
+    </div>
+
+    <!-- ==================== СКРИПТЫ ИНТЕРАКТИВНОСТИ ==================== -->
+    <script>
+        // 1. База позиций меню по категориям
+        const menuData = {
+            hot: [
+                {
+                    title: "Томлёная говяжья щека с картофельным кремом",
+                    desc: "Нежнейшая говядина долгого томления в печи, воздушное пюре со сливочным маслом и насыщенный соус демиглас.",
+                    weight: "320 г",
+                    price: "690 ₽",
+                    badge: "Хит печи"
+                },
+                {
+                    title: "Хачапури по-аджарски из дровяной печи",
+                    desc: "Румяная лодочка из живого теста с тягучим домашним сулугуни из нашей сыроварни и фермерским желтком.",
+                    weight: "380 г",
+                    price: "480 ₽",
+                    badge: "С пылу с жару"
+                },
+                {
+                    title: "Утиная ножка конфи с печёным яблоком",
+                    desc: "Хрустящая корочка, сочное мясо утки, карамелизированное яблоко и ягодный пряный соус.",
+                    weight: "310 г",
+                    price: "740 ₽",
+                    badge: ""
+                },
+                {
+                    title: "Сливочная уха с форелью и дымком",
+                    desc: "Наваристый бульон из карельской форели, сливки, картофель, зелень и подача с хрустящей гренкой из печи.",
+                    weight: "350 г",
+                    price: "520 ₽",
+                    badge: ""
+                }
+            ],
+            cheese: [
+                {
+                    title: "Фермерская буррата с печёными томатами и песто",
+                    desc: "Мешочек из нежной моцареллы со сливочной страчателлой внутри, сладкие печёные томаты и ароматный базилик.",
+                    weight: "260 г",
+                    price: "590 ₽",
+                    badge: "Варим утром"
+                },
+                {
+                    title: "Жареный халуми с ягодным соусом",
+                    desc: "Золотистые ломтики ремесленного кипрского сыра с румяной корочкой и кисло-сладким брусничным конфи.",
+                    weight: "210 г",
+                    price: "460 ₽",
+                    badge: "Выбор гостей"
+                },
+                {
+                    title: "Сырная тарелка от сыровара",
+                    desc: "4 вида фирменного сыра (качотта, страчателла, скаморца, моцарелла), цветочный мёд, грецкий орех и гриссини.",
+                    weight: "340 г",
+                    price: "890 ₽",
+                    badge: "На компанию"
+                },
+                {
+                    title: "Страчателла с тёплой чиабаттой",
+                    desc: "Сливочные нити молодого сыра с оливковым маслом первого отжима, морской солью и свежеиспечённой чиабаттой.",
+                    weight: "240 г",
+                    price: "440 ₽",
+                    badge: ""
+                }
+            ],
+            dessert: [
+                {
+                    title: "Фирменный медовик с солёной карамелью",
+                    desc: "Тонкие ароматные медовые коржи, нежный сметанно-сливочный крем и тягучая домашняя солёная карамель.",
+                    weight: "160 г",
+                    price: "340 ₽",
+                    badge: "Бестселлер"
+                },
+                {
+                    title: "Баскский чизкейк с ягодным конфи",
+                    desc: "Обожжённый снаружи и кремовый внутри чизкейк из сливочного сыра с тёплым соусом из лесных ягод.",
+                    weight: "170 г",
+                    price: "390 ₽",
+                    badge: ""
+                },
+                {
+                    title: "Наполеон на слоёном тесте с заварным кремом",
+                    desc: "Хрустящие слоёные коржи ручной раскатки и классический ванильный заварной крем пломбир.",
+                    weight: "180 г",
+                    price: "350 ₽",
+                    badge: ""
+                },
+                {
+                    title: "Торт на заказ (от 2 кг) — индивидуальный дизайн",
+                    desc: "Свадебные, детские и праздничные торты с вашей начинкой и декором. Дегустационный сет начинок по запросу.",
+                    weight: "от 2 000 г",
+                    price: "от 2 200 ₽/кг",
+                    badge: "На торжество"
+                }
+            ]
+        };
+
+        // 2. Переключение вкладок меню
+        function switchTab(category) {
+            const container = document.getElementById('menu-items-container');
+            const buttons = document.querySelectorAll('.menu-tab-btn');
+
+            // Обновляем активный стиль кнопок
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-charcoal', 'text-cream', 'shadow-lg');
+                btn.classList.add('bg-white', 'text-charcoal', 'border', 'border-stone-200');
+            });
+
+            const activeBtn = document.getElementById(`tab-btn-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-charcoal', 'border', 'border-stone-200');
+                activeBtn.classList.add('bg-charcoal', 'text-cream', 'shadow-lg');
+            }
+
+            // Отрисовка карточек блюд
+            const items = menuData[category] || [];
+            container.innerHTML = items.map(item => `
+                <div class="tab-content bg-white rounded-2xl p-6 sm:p-7 border border-stone-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-4 mb-2">
+                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-charcoal leading-snug">${item.title}</h3>
+                            <span class="shrink-0 font-bold text-lg sm:text-xl text-terracotta">${item.price}</span>
+                        </div>
+                        <p class="text-sm text-mutedText leading-relaxed">${item.desc}</p>
+                    </div>
+                    <div class="mt-5 pt-3 border-t border-stone-100 flex items-center justify-between text-xs">
+                        <span class="text-mutedText font-medium">Выход: ${item.weight}</span>
+                        ${item.badge ? `<span class="bg-terracotta/10 text-terracotta font-semibold px-2.5 py-1 rounded-full">${item.badge}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Инициализация первой вкладки при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            switchTab('hot');
+            initScrollReveal();
+        });
+
+        // 3. Мобильное меню
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 4. Модальное окно бронирования и заказа
+        const modal = document.getElementById('booking-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalTypeSelect = document.getElementById('modal-type');
+        const modalFormView = document.getElementById('modal-form-view');
+        const modalSuccessView = document.getElementById('modal-success-view');
+
+        function openModal(type = 'Бронь столика') {
+            // Закрываем мобильное меню, если открыто
+            mobileMenu.classList.add('hidden');
+
+            // Сбрасываем вид на форму
+            modalFormView.classList.remove('hidden');
+            modalSuccessView.classList.add('hidden');
+
+            // Подставляем заголовок и нужный пункт в select
+            if (type === 'Заказ торта') {
+                modalTitle.textContent = 'Рассчитать торт на заказ';
+                modalTypeSelect.value = 'Заказ торта';
+            } else if (type === 'Сырный сет') {
+                modalTitle.textContent = 'Заказать сырный сет';
+                modalTypeSelect.value = 'Сырный сет';
+            } else {
+                modalTitle.textContent = 'Забронировать столик';
+                modalTypeSelect.value = 'Бронь столика';
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Закрытие модалки по клику на тёмный фон
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Обработка отправки формы в модальном окне
+        function submitModalForm(event) {
+            event.preventDefault();
+            const userName = document.getElementById('modal-name').value || 'Гость';
+            const selectedType = modalTypeSelect.value.toLowerCase();
+            
+            document.getElementById('success-message-text').textContent = 
+                `${userName}, ваша заявка («${selectedType}») успешно принята! Администратор ресторана «ПЕЧЬ» свяжется с вами в течение 5 минут.`;
+
+            modalFormView.classList.add('hidden');
+            modalSuccessView.classList.remove('hidden');
+            event.target.reset();
+        }
+
+        // Обработка встроенной формы внизу страницы
+        function handleInlineForm(event) {
+            event.preventDefault();
+            event.target.reset();
+            const toast = document.getElementById('toast-notification');
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 4000);
+        }
+
+        // 5. Плавное появление блоков при скролле (Intersection Observer)
+        function initScrollReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.12
+            });
+
+            reveals.forEach(el => observer.observe(el));
+        }
+    </script>
+</body>
+</html>
